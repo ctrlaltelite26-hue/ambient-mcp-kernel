@@ -6,17 +6,11 @@ Household consent kernel for ambient MCP — pantry/reorder skin for the [Amazon
 
 ## Status
 
-Phase 5 — AmbientBench (100 scenarios, held-out sealed) + AWS DynamoDB/KMS adapters (offline stubs default). Devpost draft: [docs/DEVPOST.md](./docs/DEVPOST.md).
+Phase 5 — AmbientBench (100 scenarios, held-out sealed) + AWS DynamoDB/KMS adapters (offline stubs default).
 
 ## Docs
 
-- [BUILD-PLAN.md](./BUILD-PLAN.md) — start → finish plan
-- [UI-DESIGN.md](./UI-DESIGN.md) — theme + screens (fix Stitch drifts per §3.1)
-- [FRICTION.md](./FRICTION.md) — continuous friction log
-- [docs/AWS.md](./docs/AWS.md) — DynamoDB / KMS / Bedrock
 - [docs/AMBIENTBENCH.md](./docs/AMBIENTBENCH.md) — claim table + seal
-- [docs/DEVPOST.md](./docs/DEVPOST.md) — submission draft
-- [docs/DEMO-VIDEO.md](./docs/DEMO-VIDEO.md) — VO + click-by-click filming script
 
 ## Quick start
 
@@ -57,7 +51,7 @@ You should see tools `hello_chaperone`, `propose_order`, `commit_order`, `list_h
 
 - Sim-host: password `household` — Maya / Leo / Guest selectors (not biometrics)
 - AmbientBench: `pnpm eval:offline` (no AWS)
-- AWS dual-write: set `CHAPERONE_AWS=1` — see [docs/AWS.md](./docs/AWS.md)
+- AWS dual-write: set `CHAPERONE_AWS=1` in `apps/mcp-server/.env` (see `.env.example`)
 
 ## Shared with Threshold
 
