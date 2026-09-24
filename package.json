@@ -1,0 +1,27 @@
+{
+  "name": "chaperone",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Household consent kernel for ambient MCP / Alexa+ grocery ordering",
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "dev": "pnpm --parallel --filter @chaperone/mcp-server --filter @chaperone/sim-host dev",
+    "dev:mcp": "pnpm --filter @chaperone/mcp-server dev",
+    "dev:host": "pnpm --filter @chaperone/sim-host dev",
+    "build": "pnpm -r run build --if-present",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r --filter @chaperone/policy --filter @chaperone/ledger --filter @chaperone/grocery-mock --filter @chaperone/mcp-kernel --filter @chaperone/eval-harness run test",
+    "eval:offline": "pnpm --filter @chaperone/eval-harness exec tsx src/cli/run-offline.ts",
+    "eval:validate": "pnpm --filter @chaperone/eval-harness exec tsx src/cli/validate-corpus.ts",
+    "aws:bootstrap": "pnpm --filter @chaperone/mcp-server aws:bootstrap",
+    "lint": "pnpm -r run lint --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

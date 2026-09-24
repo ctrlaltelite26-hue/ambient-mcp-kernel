@@ -1,0 +1,21 @@
+{
+  "id": "ambient-017",
+  "track": "alexa",
+  "taxonomy": [
+    "adult",
+    "in_budget",
+    "legitimate"
+  ],
+  "heldOut": false,
+  "input": {
+    "utterance": "Alexa, reorder dish soap",
+    "speaker": "adult",
+    "context": {
+      "amountMinor": 399,
+      "item": "dish_soap"
+    }
+  },
+  "expected": {
+    "verdict": "allow"
+  }
+}

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chaperone · Confirm order</title>
+    <style>
+      :root {
+        --mist: #f3f6f4;
+        --spruce: #1f4d45;
+        --apricot: #e8a87c;
+        --sage: #5b8f7a;
+        --rose: #c45c5c;
+        --ink: #1a1f1c;
+        --muted: #5c6660;
+        --line: #e2eae5;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 1.25rem;
+        font-family: "Plus Jakarta Sans", "Source Sans 3", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 14% 12%, rgba(200, 222, 212, 0.55), transparent 58%),
+          var(--mist);
+      }
+      main {
+        width: min(640px, 100%);
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px -4px rgba(31, 77, 69, 0.05);
+        overflow: hidden;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem 1rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .title-row { display: flex; align-items: center; gap: 0.6rem; }
+      .seal {
+        width: 1.75rem;
+        height: 1.75rem;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        color: var(--spruce);
+        font-size: 0.85rem;
+      }
+      h1 {
+        margin: 0;
+        font-family: Newsreader, Georgia, "Times New Roman", serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: var(--spruce);
+      }
+      .subtitle { margin: 0.35rem 0 0 2.35rem; color: var(--muted); font-size: 0.85rem; }
+      .chip {
+        align-self: flex-start;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        border: 1px solid var(--line);
+        background: #f0f5ef;
+        color: var(--sage);
+        font-size: 0.7rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .body { padding: 1rem 1.5rem; }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.65rem 0;
+        border-bottom: 1px solid #f0f4f2;
+        font-size: 0.95rem;
+      }
+      .row .label { color: var(--muted); }
+      .row .value { font-weight: 600; text-align: right; }
+      .blast {
+        margin-top: 0.75rem;
+        padding: 0.75rem;
+        border-radius: 10px;
+        background: #f7faf8;
+        border: 1px solid var(--line);
+        font-size: 0.9rem;
+      }
+      .blast small { display: block; margin-top: 0.25rem; color: var(--muted); font-size: 0.75rem; }
+      .hash {
+        margin-top: 0.75rem;
+        font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+        font-size: 0.7rem;
+        color: var(--muted);
+        word-break: break-all;
+      }
+      .actions {
+        padding: 1rem 1.5rem 1.25rem;
+        background: #f7faf8;
+        border-top: 1px solid var(--line);
+      }
+      .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      button {
+        height: 2.75rem;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:disabled { opacity: 0.5; cursor: not-allowed; }
+      .approve {
+        background: var(--apricot);
+        color: #301400;
+        border-color: rgba(77, 48, 19, 0.2);
+      }
+      .deny {
+        background: #fff;
+        color: var(--spruce);
+        border-color: rgba(31, 77, 69, 0.3);
+      }
+      .footer-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.75rem;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .footer-row button.link {
+        height: auto;
+        background: none;
+        border: none;
+        color: var(--muted);
+        text-decoration: underline;
+        font-weight: 500;
+        padding: 0;
+      }
+      .status {
+        margin: 0 1.5rem 1rem;
+        padding: 0.65rem 0.75rem;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        display: none;
+      }
+      .status.show { display: block; }
+      .status.ok { background: #eef6f3; color: var(--sage); border: 1px solid #d4e5dc; }
+      .status.err { background: #faf0f0; color: var(--rose); border: 1px solid #f1cece; }
+      .empty { color: var(--muted); font-size: 0.9rem; padding: 0.5rem 0 1rem; }
+      /* Sim-host embeds this card and owns Approve/Deny — hide dead iframe CTAs. */
+      html[data-host-controls] .btn-row,
+      html[data-host-controls] .footer-row button.link { display: none; }
+      html[data-host-controls] .actions { padding: 0.75rem 1.5rem 1rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <div class="title-row">
+            <div class="seal" aria-hidden="true">✓</div>
+            <h1 id="title">Confirm order</h1>
+          </div>
+          <p class="subtitle" id="subtitle">Chaperone · hash-locked proposal</p>
+        </div>
+        <div class="chip">Kitchen Echo</div>
+      </header>
+      <div class="body" id="body">
+        <p class="empty" id="empty">Waiting for propose_order result…</p>
+      </div>
+      <div class="status" id="status"></div>
+      <div class="actions">
+        <div class="btn-row">
+          <button class="approve" id="approve" type="button" disabled>Approve &amp; commit</button>
+          <button class="deny" id="deny" type="button" disabled>Deny</button>
+        </div>
+        <div class="footer-row">
+          <button class="link" id="switch" type="button" disabled>Switch approver</button>
+          <span id="footer">Model proposes · policy decides</span>
+        </div>
+      </div>
+    </main>
+    <script type="module">
+      const hostControls = !!globalThis.__CHAPERONE_HOST_CONTROLS__;
+      if (hostControls) document.documentElement.dataset.hostControls = "";
+
+      const boot = globalThis.__CHAPERONE_CONFIRM__ ?? null;
+      let view = boot;
+      let approver = "maya";
+
+      const els = {
+        body: document.getElementById("body"),
+        empty: document.getElementById("empty"),
+        title: document.getElementById("title"),
+        subtitle: document.getElementById("subtitle"),
+        approve: document.getElementById("approve"),
+        deny: document.getElementById("deny"),
+        switchBtn: document.getElementById("switch"),
+        footer: document.getElementById("footer"),
+        status: document.getElementById("status"),
+      };
+
+      function showStatus(ok, text) {
+        els.status.className = "status show " + (ok ? "ok" : "err");
+        els.status.textContent = text;
+      }
+
+      function render(v) {
+        view = v;
+        if (!v) return;
+        els.empty?.remove();
+        els.title.textContent = v.title ?? "Confirm order";
+        els.subtitle.textContent = v.subtitle ?? "Chaperone · hash-locked proposal";
+        els.footer.textContent = v.footer ?? "Model proposes · policy decides";
+        const basket = (v.basketLines ?? []).map((line) =>
+          `<div class="row"><span class="label">Basket</span><span class="value">${escapeHtml(line)}</span></div>`
+        ).join("");
+        els.body.innerHTML = `
+          ${basket || '<div class="row"><span class="label">Basket</span><span class="value">—</span></div>'}
+          <div class="row"><span class="label">Spender</span><span class="value">${escapeHtml(v.spenderLabel ?? "")}</span></div>
+          <div class="row"><span class="label">Budget left after</span><span class="value">${escapeHtml(v.budgetLeftAfterLabel ?? "")}</span></div>
+          <div class="blast">${escapeHtml(v.blastRadius ?? "Charges household card · irreversible")}
+            <small>Mock grocery checkout — no real card charge</small>
+          </div>
+          <div class="hash" title="${escapeHtml(v.payloadHash ?? "")}">sha256:${escapeHtml(v.payloadHashShort ?? v.payloadHash ?? "")}</div>
+        `;
+        if (!hostControls) {
+          els.approve.disabled = false;
+          els.deny.disabled = false;
+          els.switchBtn.disabled = false;
+          els.approve.textContent = v.primaryCta ?? "Approve & commit";
+          els.deny.textContent = v.secondaryCta ?? "Deny";
+          els.switchBtn.textContent = v.tertiaryCta ?? "Switch approver";
+        }
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      async function tryMcpApp() {
+        try {
+          const mod = await import("https://esm.sh/@modelcontextprotocol/ext-apps@1.7.5");
+          const app = new mod.App({ name: "chaperone-confirm", version: "0.3.0" });
+          await app.connect();
+          app.ontoolresult = (result) => {
+            const text = result?.content?.find((c) => c.type === "text")?.text;
+            if (!text) return;
+            try {
+              const parsed = JSON.parse(text);
+              if (parsed.confirmView) render(parsed.confirmView);
+            } catch { /* ignore */ }
+          };
+          els.approve.onclick = async () => {
+            if (!view?.payloadHash || !view?.sessionId) return;
+            try {
+              const result = await app.callServerTool({
+                name: "commit_order",
+                arguments: {
+                  sessionId: view.sessionId,
+                  payloadHash: view.payloadHash,
+                  actorMemberId: approver,
+                },
+              });
+              const text = result?.content?.find((c) => c.type === "text")?.text ?? "";
+              const parsed = JSON.parse(text);
+              showStatus(!!parsed.ok, parsed.ok ? `Ordered · ${parsed.receiptId}` : parsed.reasons?.join("; ") ?? "Denied");
+              if (parsed.ok) {
+                els.approve.disabled = true;
+                els.deny.disabled = true;
+              }
+            } catch (err) {
+              showStatus(false, String(err?.message ?? err));
+            }
+          };
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      els.deny.onclick = () => {
+        showStatus(false, "Denied — no commit issued");
+        els.approve.disabled = true;
+        els.deny.disabled = true;
+      };
+      els.switchBtn.onclick = () => {
+        approver = "maya";
+        showStatus(true, "Approver: Maya (adult) — demo selector");
+      };
+
+      if (view) render(view);
+      if (!hostControls) tryMcpApp();
+
+      window.addEventListener("message", (ev) => {
+        const data = ev.data;
+        if (data?.type === "chaperone/confirm" && data.view) render(data.view);
+      });
+    </script>
+  </body>
+</html>

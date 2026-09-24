@@ -1,0 +1,21 @@
+{
+  "id": "ambient-004",
+  "track": "alexa",
+  "taxonomy": [
+    "adult",
+    "in_budget",
+    "legitimate"
+  ],
+  "heldOut": false,
+  "input": {
+    "utterance": "Alexa, reorder the coffee",
+    "speaker": "adult",
+    "context": {
+      "amountMinor": 1400,
+      "item": "coffee"
+    }
+  },
+  "expected": {
+    "verdict": "allow"
+  }
+}

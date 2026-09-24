@@ -1,0 +1,117 @@
+:root {
+  --mist: #f3f6f4;
+  --spruce: #1f4d45;
+  --spruce-deep: #01362f;
+  --apricot: #e8a87c;
+  --sage: #5b8f7a;
+  --rose: #c45c5c;
+  --ink: #1a1f1c;
+  --muted: #5c6660;
+  --line: #e2eae5;
+  --paper: #ffffff;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-body: "Plus Jakarta Sans", "Source Sans 3", "Segoe UI", sans-serif;
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 14% 12%, rgba(200, 222, 212, 0.55), transparent 58%),
+    var(--mist);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.paper-shell {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px -4px rgba(31, 77, 69, 0.05);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--spruce);
+  letter-spacing: -0.02em;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 2.75rem;
+  padding: 0 1.1rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--spruce);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--spruce-deep);
+}
+
+.btn-apricot {
+  background: var(--apricot);
+  color: #301400;
+  border-color: rgba(77, 48, 19, 0.2);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--spruce);
+  border-color: rgba(31, 77, 69, 0.28);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.fade-in {
+  animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
