@@ -52,7 +52,3 @@ You should see tools `hello_chaperone`, `propose_order`, `commit_order`, `list_h
 - Sim-host: password `household` — Maya / Leo / Guest selectors (not biometrics)
 - AmbientBench: `pnpm eval:offline` (no AWS)
 - AWS dual-write: set `CHAPERONE_AWS=1` in `apps/mcp-server/.env` (see `.env.example`)
-
-## Shared with Threshold
-
-`packages/eval-harness` §7 envelope is copied into [`../threshold/packages/eval-harness`](../threshold/packages/eval-harness). Keep `ScenarioSchema` identical — see Threshold `SHARED.md`.
