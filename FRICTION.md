@@ -98,7 +98,7 @@ Severity: `blocker` | `high` | `medium` | `low` | `nit`
 | **Task** | Remove `tvPlaying` / `injectedToolDescription` / `ambiguousIntent` oracles; measure identity, catalog hash, referents, hash-lock |
 | **Steps** | Policy+MCP+host strip flags; kernel pin + `disableHashLock` + open-proposal referents; rewrite baseline/ablation; rewrite corpus + I1 class; `pnpm test`; `pnpm eval:offline`; re-seal held-out |
 | **Expected** | Treatment bypasses 0; baseline ≠ ablation; false refusals published; no retune toward 100/100 |
-| **Actual** | Pass (2026-09-20). treatmentPass 100/100 against mechanism labels; bypasses baseline=81 treatment=0 ablation=10; falseRefusals=0; seal `8ca0f8bd…`. Ablation is hash-lock off, not unguarded MCP. TV-ad path is unidentified speaker → elicit, not a TV detector. |
+| **Actual** | Pass (2026-09-20). treatmentPass 100/100 against mechanism labels; bypasses baseline=81 treatment=0 ablation=10; falseRefusals=0; seal `4ca8e7bf942d9ab2632155e9839e5a89f67850ddb22d716f74ac95c17a92c0a1` (matches `corpus/seals/HELD_OUT.sha256`). Ablation is hash-lock off, not unguarded MCP. TV-ad path is unidentified speaker → elicit, not a TV detector. |
 | **Severity** | high (integrity of the claim table) |
 | **Workaround** | Demo copy: unidentified speaker cannot commit. Host must pass `invokedToolDescription` for catalog pin. |
 | **Suggestion** | Keep held-out sealed; do not add oracle flags if a new attack class scores poorly |

@@ -103,8 +103,12 @@ function createServer(): McpServer {
       let basket;
       try {
         basket = [lineFromSku(args.sku, args.qty)];
-      } catch {
-        basket = [{ sku: args.sku, qty: args.qty, unitPriceMinor: 1000 }];
+      } catch (err) {
+        const message = err instanceof Error ? err.message : `Unknown sku: ${args.sku}`;
+        return {
+          isError: true,
+          content: [{ type: "text", text: message }],
+        };
       }
       const result = kernel.propose({
         sessionId: args.sessionId,

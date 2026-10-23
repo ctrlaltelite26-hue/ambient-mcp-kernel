@@ -32,7 +32,7 @@ export const DEMO_MEMBERS: Record<DemoMemberId, DemoMemberProfile> = {
     displayName: "Leo",
     role: "child",
     spendCapMinor: 0,
-    selectorHint: "Child · purchases denied",
+    selectorHint: "Child · purchases held for adult approval",
   },
   guest: {
     id: "guest",
