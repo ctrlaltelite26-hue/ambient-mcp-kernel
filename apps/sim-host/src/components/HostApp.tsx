@@ -466,7 +466,7 @@ export function HostApp() {
             </p>
             <p className="muted" style={{ margin: "0 0 1rem", fontSize: "0.8rem" }}>
               ledger #{String(commit.ledgerEntry?.seq ?? 1).padStart(4, "0")} ·{" "}
-              {commit.receiptId} · Append-only ledger · KMS-signed (demo stub OK)
+              {commit.receiptId} · Append-only ledger · stub-signed
             </p>
             <button
               className="btn btn-primary"

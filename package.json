@@ -8,7 +8,7 @@
     "dev": "pnpm --parallel --filter @chaperone/mcp-server --filter @chaperone/sim-host dev",
     "dev:mcp": "pnpm --filter @chaperone/mcp-server dev",
     "dev:host": "pnpm --filter @chaperone/sim-host dev",
-    "build": "pnpm -r run build --if-present",
+    "build": "pnpm -r --if-present run build",
     "typecheck": "pnpm -r run typecheck",
     "test": "pnpm -r --filter @chaperone/policy --filter @chaperone/ledger --filter @chaperone/grocery-mock --filter @chaperone/mcp-kernel --filter @chaperone/eval-harness run test",
     "eval:offline": "pnpm --filter @chaperone/eval-harness exec tsx src/cli/run-offline.ts",

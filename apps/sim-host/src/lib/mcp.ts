@@ -27,6 +27,9 @@ export async function callToolJson(
     const text = (result.content as { type: string; text?: string }[] | undefined)?.find(
       (c) => c.type === "text",
     )?.text;
+    if (result.isError) {
+      throw new Error(text ?? `${name} failed`);
+    }
     if (!text) return result;
     try {
       return JSON.parse(text);
